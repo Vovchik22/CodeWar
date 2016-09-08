@@ -293,3 +293,120 @@ def title_case(title, minor_words=''):
     title = title.capitalize().split()
     minor_words = minor_words.lower().split()
     return ' '.join([word if word in minor_words else word.capitalize() for word in title])
+
+
+#IQ Test
+
+'''
+Description:
+
+Bob is preparing to pass IQ test. The most frequent task in this test is to find out which one of the given numbers differs from the others. Bob observed that one number usually differs from the others in evenness. Help Bob — to check his answers, he needs a program that among the given numbers finds one that is different in evenness, and return a position of this number.
+
+! Keep in mind that your task is to help Bob solve a real IQ test, which means indexes of the elements start from 1 (not 0)
+
+Examples :
+
+iq_test("2 4 7 8 10") => 3 // Third number is odd, while the rest of the numbers are even
+
+iq_test("1 2 1 1") => 2 // Second number is even, while the rest of the numbers are odd
+'''
+
+def iq_test(numbers):
+    e = [int(i) % 2 == 0 for i in numbers.split()]
+    return e.index(True) + 1 if e.count(True) == 1 else e.index(False) + 1
+
+def iq_test(numbers):
+    numbers = numbers.split(" ")
+    odd = []
+    even = []
+    for i,v in enumerate(numbers):
+        if int(v) % 2:
+            odd.append([i,v])
+        else:
+            even.append([i,v])
+    if len(even) == 1:
+        return (even[0][0])+1
+    if len(odd) == 1:
+        return (odd[0][0])+1
+
+def iq_test(n):
+    n = [int(i)%2 for i in n.split()]
+    if n.count(0)>1:
+        return n.index(1)+1
+    else:
+        return n.index(0)+1
+
+#Triple trouble
+
+'''
+Description:
+
+Write a function
+
+triple_double(num1, num2)
+which takes in numbers num1 and num2 and returns 1 if there is a straight triple of a number at any place in num1 and also a straight double of the same number in num2.
+For example:
+triple_double(451999277, 41177722899) == 1 // num1 has straight triple 999s and 
+                                          // num2 has straight double 99s
+
+triple_double(1222345, 12345) == 0 // num1 has straight triple 2s but num2 has only a single 2
+
+triple_double(12345, 12345) == 0
+
+triple_double(666789, 12345667) == 1
+If this isn't the case, return 0
+
+'''
+
+def triple_double(num1, num2):
+    for x in str(num1):
+        while str(num1).find(x*3)>-1 and str(num2).find(x*2)>-1:
+            return 1
+    return 0
+    return [1 if str(num1).find(x*3)>0 and str(num2).find(x*2)>0 else 0 for x in str(num1)]
+
+def triple_double(num1, num2):
+    return any([i * 3 in str(num1) and i * 2 in str(num2) for i in '0123456789'])
+
+
+#WeIrD StRiNg CaSe
+
+'''
+Description:
+
+Write a function toWeirdCase (weirdcase in Ruby) that accepts a string, and returns the same string with all even indexed characters in each word upper cased, and all odd indexed characters in each word lower cased. The indexing just explained is zero based, so the zero-ith index is even, therefore that character should be upper cased.
+
+The passed in string will only consist of alphabetical characters and spaces(' '). Spaces will only be present if there are multiple words. Words will be separated by a single space(' ').
+
+Examples:
+
+to_weird_case('String'); # => returns 'StRiNg'
+to_weird_case('Weird string case') # => returns 'WeIrD StRiNg CaSe'
+'''
+#1
+def to_weird_case(string):
+    recase = lambda s: "".join([c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(s)])
+    return " ".join([recase(word) for word in string.split(" ")])
+
+#2
+def to_weird_case_word(string):
+    return "".join(c.upper() if i%2 == 0 else c for i, c in enumerate(string.lower()))
+    
+def to_weird_case(string):
+    return " ".join(to_weird_case_word(str) for str in string.split())
+
+#3
+def to_weird_case(a):
+    c = a.split(" ")
+    for i in range(len(a.split(" "))):
+        b = []
+        for j in range(len(a.split(" ")[i])):
+            if j % 2 ==0:
+                b += a.split(" ")[i][j].upper()
+            else:
+                b += a.split(" ")[i][j].lower()
+        c[i]= ''.join(b)
+    return ' '.join(c)
+
+
+
