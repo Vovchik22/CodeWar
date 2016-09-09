@@ -408,5 +408,110 @@ def to_weird_case(a):
         c[i]= ''.join(b)
     return ' '.join(c)
 
+#Pete, the baker
+
+'''
+Description:
+
+Pete likes to bake some cakes. He has some recipes and ingredients. Unfortunately he is not good in maths. Can you help him to find out, how many cakes he could bake considering his recipes?
+
+Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). Ingredients that are not present in the objects, can be considered as 0.
+
+Examples:
+
+# must return 2
+cakes({flour: 500, sugar: 200, eggs: 1}, {flour: 1200, sugar: 1200, eggs: 5, milk: 200})
+# must return 0
+cakes({apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100}, {sugar: 500, flour: 2000, milk: 2000})
+'''
+
+#注意dict.get(key, default=None)的妙用
+def cakes(recipe, available):
+    return min(available.get(k, 0)/recipe[k] for k in recipe)
+
+def cakes(recipe, available):
+    return min(available.get(k, 0) / v for k, v in recipe.iteritems())
+
+def cakes(recipe, available):
+    return min([available[k]/v][0] if k in available else 0 for k,v in recipe.items())
+
+#Human Readable Time
+
+'''
+Write a function, which takes a non-negative integer (seconds) as input and returns the time in a human-readable format (HH:MM:SS)
+
+HH = hours, padded to 2 digits, range: 00 - 99
+MM = minutes, padded to 2 digits, range: 00 - 59
+SS = seconds, padded to 2 digits, range: 00 - 59
+The maximum time never exceeds 359999 (99:59:59)
+
+You can find some examples in the test fixtures.
+'''
+## %02d = two digits at least
+
+def make_readable(seconds):
+    return "%02d:%02d:%02d"%(seconds/(60*60),(seconds/60)%60,seconds%60)
+
+def make_readable(s):
+    return '{:02}:{:02}:{:02}'.format(s / 3600, s / 60 % 60, s % 60)
+
+#Bit Counting
+
+'''
+Write a function that takes an (unsigned) integer as input, and returns the number of bits that are equal to one in the binary representation of that number.
+
+Example: The binary representation of 1234 is 10011010010, so the function should return 5 in this case
+'''
+def countBits(n):
+    return bin(n).count("1")
+
+def countBits(n):
+    total = 0
+    while n > 0:
+        total += n % 2
+        n >>= 1
+    return total
+
+#Moving Zeros To The End
+'''
+Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+
+move_zeros([false,1,0,1,2,0,1,3,"a"]) # returns[false,1,1,2,1,3,"a",0,0]
+
+Test.assert_equals(move_zeros([1,2,0,1,0,1,0,3,0,1]),[ 1, 2, 1, 1, 3, 1, 0, 0, 0, 0 ])
+Test.assert_equals(move_zeros([9,0.0,0,9,1,2,0,1,0,1,0.0,3,0,1,9,0,0,0,0,9]),[9,9,1,2,1,1,3,1,9,9,0,0,0,0,0,0,0,0,0,0])
+Test.assert_equals(move_zeros(["a",0,0,"b","c","d",0,1,0,1,0,3,0,1,9,0,0,0,0,9]),["a","b","c","d",1,1,3,1,9,9,0,0,0,0,0,0,0,0,0,0])
+Test.assert_equals(move_zeros(["a",0,0,"b",None,"c","d",0,1,False,0,1,0,3,[],0,1,9,0,0,{},0,0,9]),["a","b",None,"c","d",1,False,1,3,[],1,9,{},9,0,0,0,0,0,0,0,0,0,0])
+Test.assert_equals(move_zeros([0,1,None,2,False,1,0]),[1,None,2,False,1,0,0])
+Test.assert_equals(move_zeros(["a","b"]),["a","b"])
+Test.assert_equals(move_zeros(["a"]),["a"])
+Test.assert_equals(move_zeros([0,0]),[0,0])
+Test.assert_equals(move_zeros([0]),[0])
+Test.assert_equals(move_zeros([]),[])
+
+'''
+
+def move_zeros(array):
+    a = list(filter(lambda x: x!=0 or type(x) is bool, array))
+    return a + [0]*(len(array)-len(a))
+
+
+def move_zeros(array):
+    a = list(filter(lambda x: x!=0 or type(x) is bool, array))
+    return a + [0]*(len(array)-len(a))
+
+###
+def move_zeross(array):
+    for i in range(len(array)):
+        if array[i] is not False and array[i] == 0:
+            array.pop(i)
+            array.append(0)
+    return array
+
+def move_zeros(array):
+    for i in range(len(array)):
+        if array[i] is not False and array[i] == 0:
+            move_zeross(array)
+    return array
 
 
